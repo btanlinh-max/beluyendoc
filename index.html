@@ -1,0 +1,590 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Bé Vui Luyện Đọc</title>
+<meta name="description" content="Phiếu luyện đọc phân hóa theo bài – Tiếng Việt 1, Kết nối tri thức">
+<meta name="theme-color" content="#E8590C">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon-192.png">
+<link rel="stylesheet" href="fonts/fonts.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js" defer></script>
+<style>
+:root{--pri:#E8590C;--pri2:#FFB020;--ink:#3A2A1E;--mut:#8A776A;--bg:#FFF8F0;--card:#fff;--line:#F1E3D3;--on:#1C64F2;--rim:#E02424;--ok:#16A34A;--mid:#EAB308;--low:#DC2626;--r:22px}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Quicksand",system-ui,sans-serif;font-weight:500;-webkit-text-size-adjust:100%}
+h1,h2,h3,.fun{font-family:"Mali","Quicksand",sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}
+.top{background:linear-gradient(120deg,#E8590C,#F97316 60%,#FFB020);color:#fff;padding:14px 18px 0;position:sticky;top:0;z-index:20;box-shadow:0 6px 18px rgba(232,89,12,.18)}
+.top-in{max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.logo{width:46px;height:46px;border-radius:14px;background:#fff;display:grid;place-items:center;font-size:28px;box-shadow:0 3px 0 rgba(0,0,0,.12)}
+.brand h1{margin:0;font-size:26px;line-height:1.1}
+.brand .sub{font-size:13px;opacity:.92}
+.lesson-pick{margin-left:auto;display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.18);padding:6px 6px 6px 14px;border-radius:999px}
+.lesson-pick label{font-size:13px;font-weight:700}
+.lesson-pick select{border:0;border-radius:999px;padding:8px 12px;background:#fff;color:var(--ink);font-weight:700;max-width:280px}
+.tabs{display:flex;gap:6px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;color:#fff;padding:10px 16px 12px;border-radius:16px 16px 0 0;font-weight:700;white-space:nowrap;cursor:pointer;font-size:15px}
+.tab.on{background:var(--bg);color:var(--pri)}
+main{max-width:1200px;margin:0 auto;padding:20px 18px 80px}
+.pane{display:none}.pane.on{display:block}
+.card{background:var(--card);border-radius:var(--r);border:2px solid var(--line);padding:18px;margin-bottom:16px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.btn{border:2px solid var(--line);background:#fff;border-radius:14px;padding:10px 16px;font-weight:700;cursor:pointer;text-decoration:none;color:var(--ink);display:inline-flex;align-items:center;gap:6px}
+.btn:hover{border-color:var(--pri2)}
+.btn.pri{background:var(--pri);border-color:var(--pri);color:#fff;box-shadow:0 3px 0 #B9450A}
+.btn.ghost{background:transparent}
+.btn.big{font-size:18px;padding:14px 22px}
+.muted{color:var(--mut)}.small{font-size:13px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 12px;border-radius:999px;border:2px solid var(--line);background:#fff;font-weight:700;cursor:pointer}
+.chip.on{background:#FFF0E3;border-color:var(--pri);color:var(--pri)}
+input[type=text],input[type=password],select,textarea{border:2px solid var(--line);border-radius:12px;padding:9px 12px;background:#fff;width:100%}
+textarea{resize:vertical}
+.grid2{display:grid;grid-template-columns:330px 1fr;gap:18px;align-items:start}
+@media(max-width:900px){.grid2{grid-template-columns:1fr}}
+.grid2>*{min-width:0}
+@media(max-width:700px){.top{position:static;padding:10px 12px 0}.brand h1{font-size:22px}.logo{width:38px;height:38px;font-size:22px}.lesson-pick{margin-left:0;width:100%}.lesson-pick select{max-width:none;flex:1}main{padding:14px 12px 70px}.stage .big.sent{font-size:9vw}}
+.units{display:flex;flex-wrap:wrap;gap:6px}
+.unit{padding:4px 10px;border-radius:10px;background:#FFF0E3;color:var(--pri);font-weight:700;font-family:"Mali"}
+.unit.new{background:var(--pri);color:#fff}
+.help{background:#FFF7E0;border:2px dashed #F5C04A;border-radius:16px;padding:12px 14px;font-size:14px}
+/* phiếu */
+.sheet{background:#fff;border-radius:6px;box-shadow:0 10px 30px rgba(58,42,30,.12);padding:28px 32px;max-width:820px;margin:0 auto 18px;font-family:"Quicksand"}
+.sheet h2{margin:0;color:var(--pri);font-size:26px;text-align:center}
+.sheet .meta{text-align:center;color:var(--mut);font-weight:700;margin:4px 0 10px}
+.sheet .name{display:flex;gap:20px;border-bottom:2px dotted #ccc;padding-bottom:10px;margin-bottom:12px;font-weight:700}
+.sheet .name span{flex:1}
+.lvl{border:2px solid var(--line);border-radius:16px;padding:12px 14px;margin:12px 0;break-inside:avoid}
+.lvl h3{margin:0 0 10px;font-size:18px;display:flex;align-items:center;gap:8px}
+.lvl h3 .badge{background:var(--pri);color:#fff;border-radius:10px;padding:2px 10px;font-size:14px}
+.lv1 h3 .badge{background:#1C64F2}.lv2 h3 .badge{background:#16A34A}.lv3 h3 .badge{background:#9333EA}
+.spell{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sp{display:flex;align-items:center;justify-content:center;gap:4px;font-family:"Mali";font-size:24px;border:2px solid #EEF2FF;border-radius:12px;padding:8px 4px}
+.sp .o{color:var(--on)}.sp .r{color:var(--rim)}.sp .t{font-size:13px;color:var(--mut);font-family:Quicksand;font-weight:700}
+.sp .eq{color:#bbb;font-size:18px}
+.words{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.w{text-align:center;border:2px solid #ECFDF3;border-radius:14px;padding:8px 4px}
+.w .e{font-size:30px;line-height:1.2}.w .t{font-family:"Mali";font-size:24px}
+.sents{font-family:"Mali";font-size:24px;line-height:1.75;margin:0;padding-left:28px}
+.tip{background:#FFF7E0;border-radius:14px;padding:10px 14px;font-size:14px;margin-top:12px}
+.tip b{color:var(--pri)}
+.grp{font-size:14px;color:var(--mut);margin-top:6px}
+@media(max-width:640px){.spell,.words{grid-template-columns:repeat(2,1fr)}.sheet{padding:18px 14px}.sents{font-size:20px}}
+/* trình chiếu */
+.stage{background:#fff;border-radius:28px;border:3px solid var(--line);min-height:62vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;position:relative;text-align:center}
+.stage:fullscreen{border:0;border-radius:0;background:#FFFDF8}
+.stage .emo{font-size:min(18vw,140px);line-height:1}
+.stage .big{font-family:"Mali";font-size:min(16vw,150px);font-weight:700;line-height:1.15;word-break:break-word}
+.stage .big.sent{font-size:min(8vw,74px)}
+.stage .big .o{color:var(--on)}.stage .big .r{color:var(--rim)}
+.stage .hidew{opacity:.08}
+.stage .cnt{position:absolute;top:16px;left:20px;font-weight:700;color:var(--mut)}
+.stage .ctl{position:absolute;bottom:14px;display:flex;gap:10px}
+.modes{margin-bottom:12px}
+/* trò chơi */
+.games{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px}
+@media(max-width:800px){.games{grid-template-columns:1fr}}
+.gcard{border-radius:22px;padding:18px;color:#fff;cursor:pointer;border:0;text-align:left}
+.gcard h3{margin:4px 0;font-size:22px}.gcard p{margin:0;opacity:.95;font-size:14px}
+.gcard .i{font-size:34px}
+.opts{display:flex;gap:18px;justify-content:center;margin-top:22px;flex-wrap:wrap}
+.opt{font-size:min(14vw,96px);background:#FFF8F0;border:4px solid var(--line);border-radius:26px;padding:10px 22px;cursor:pointer;transition:transform .15s}
+.opt:hover{transform:scale(1.06)}
+.opt.good{border-color:var(--ok);background:#ECFDF3}.opt.bad{border-color:var(--low);opacity:.5}
+.stars{font-size:28px;letter-spacing:2px}
+.timer{font-family:"Mali";font-size:42px;color:var(--pri)}
+.tiles{display:flex;gap:16px;align-items:center;justify-content:center;font-family:"Mali";font-size:min(14vw,110px);font-weight:700}
+.tile{background:#fff;border:4px solid currentColor;border-radius:24px;padding:4px 26px;transition:all .5s}
+.tiles.join .tile{border-color:transparent;padding:4px 0;margin:0 -8px}
+/* sổ theo dõi */
+.legend{display:flex;gap:10px;flex-wrap:wrap;font-weight:700;font-size:14px}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;vertical-align:-2px;margin-right:4px}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-top:14px}
+.kid{border:2px solid var(--line);background:#fff;border-radius:16px;padding:10px 12px;text-align:left;cursor:pointer;display:flex;align-items:center;gap:10px;font-weight:700}
+.kid .n{width:30px;height:30px;border-radius:50%;background:#F4ECE4;display:grid;place-items:center;font-size:13px;flex:none}
+.kid .nm small{display:block;font-weight:500;color:var(--mut);font-size:12px}
+.kid.A{border-color:var(--ok);background:#ECFDF3}.kid.A .n{background:var(--ok);color:#fff}
+.kid.B{border-color:var(--mid);background:#FEFCE8}.kid.B .n{background:var(--mid);color:#fff}
+.kid.C{border-color:var(--low);background:#FEF2F2}.kid.C .n{background:var(--low);color:#fff}
+.sum{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.sum div{background:#fff;border:2px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+.sum b{display:block;font-size:30px;font-family:"Mali"}
+.hist{width:100%;border-collapse:collapse;font-size:14px}
+.hist th,.hist td{border-bottom:1px solid var(--line);padding:6px;text-align:center}
+.hist td:first-child,.hist th:first-child{text-align:left}
+/* AI */
+.chk{font-family:"Mali";font-size:22px;line-height:1.7}
+.chk .bad{background:#FEE2E2;color:#B91C1C;border-radius:6px;padding:0 4px;text-decoration:underline wavy #DC2626}
+.res{border:2px solid var(--line);border-radius:16px;padding:10px 14px;margin:8px 0;display:flex;gap:10px;align-items:center;justify-content:space-between}
+.ai-wait{padding:12px;font-weight:700;color:var(--pri)}
+.spin{display:inline-block;width:16px;height:16px;border:3px solid #FBD5BD;border-top-color:var(--pri);border-radius:50%;animation:sp 1s linear infinite;vertical-align:-3px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.ai-manual{background:#FFF7E0;border-radius:16px;padding:14px;margin-top:10px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(80px);background:#3A2A1E;color:#fff;padding:12px 18px;border-radius:14px;font-weight:700;transition:.3s;z-index:99;opacity:0}
+#toast.show{transform:translateX(-50%);opacity:1}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:98;font-size:34px}
+.confetti span{position:absolute;top:-40px;animation:fall 1.6s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+@media print{
+  body{background:#fff}.top,.no-print,#toast{display:none!important}
+  main{padding:0;max-width:none}.pane{display:none!important}.pane.print{display:block!important}
+  .sheet{box-shadow:none;border-radius:0;padding:0 6mm;max-width:none;page-break-after:always}
+  .card{border:0;padding:0}
+  @page{size:A4;margin:12mm}
+}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="top-in">
+  <div class="brand">
+   <div class="logo">📖</div>
+   <div><h1>Bé Vui Luyện Đọc</h1><div class="sub" id="subline">Tiếng Việt 1 · Kết nối tri thức với cuộc sống</div></div>
+   <div class="lesson-pick"><label for="lessonSel">Đang học</label><select id="lessonSel"></select></div>
+  </div>
+  <nav class="tabs" id="tabs">
+   <button class="tab on" data-t="phieu">📝 Phiếu luyện đọc</button>
+   <button class="tab" data-t="chieu">📺 Trình chiếu</button>
+   <button class="tab" data-t="choi">🎲 Trò chơi</button>
+   <button class="tab" data-t="so">📒 Sổ theo dõi đọc</button>
+   <button class="tab" data-t="ai">✨ AI viết bài đọc</button>
+   <button class="tab" data-t="cai">⚙️ Cài đặt</button>
+  </nav>
+ </div>
+</header>
+<main>
+<!-- PHIẾU -->
+<section class="pane on" id="p-phieu">
+ <div class="grid2">
+  <div class="no-print">
+   <div class="card">
+    <h3 style="margin-top:0">Âm, vần các con đã học</h3>
+    <div class="units" id="units"></div>
+    <p class="small muted">Màu cam đậm là âm, vần của bài đang học. Web chỉ lấy tiếng, từ, câu gồm những âm, vần và dấu thanh đã học.</p>
+   </div>
+   <div class="card">
+    <h3 style="margin-top:0">Chọn mức cho phiếu</h3>
+    <div class="row" id="lvlChips">
+     <button class="chip on" data-l="1">Mức 1 · Ghép tiếng</button>
+     <button class="chip on" data-l="2">Mức 2 · Đọc từ</button>
+     <button class="chip on" data-l="3">Mức 3 · Đọc câu</button>
+    </div>
+    <p class="small muted" style="margin-bottom:6px">Mức 1 cho con còn đánh vần, Mức 2 cho con đọc chậm, Mức 3 cho con đã đọc trơn.</p>
+    <div class="row" style="margin-top:12px">
+     <button class="btn pri big" id="newSheet">🎲 Tạo phiếu mới</button>
+    </div>
+    <div class="row" style="margin-top:10px">
+     <button class="btn" id="printSheet">🖨️ In phiếu</button>
+     <button class="btn" id="imgSheet">🖼️ Lưu ảnh gửi Zalo</button>
+     <button class="btn" id="groupSheet">👥 In theo 3 nhóm</button>
+    </div>
+    <p class="small muted">“In theo 3 nhóm” lấy kết quả ở Sổ theo dõi đọc: nhóm đọc tốt nhận phiếu Mức 3, nhóm đọc chậm Mức 2, nhóm cần kèm Mức 1.</p>
+   </div>
+  </div>
+  <div id="sheetWrap"></div>
+ </div>
+</section>
+<!-- TRÌNH CHIẾU -->
+<section class="pane" id="p-chieu">
+ <div class="row modes no-print">
+  <button class="chip on" data-m="tieng">Tiếng</button><button class="chip" data-m="tu">Từ có tranh</button><button class="chip" data-m="cau">Câu</button>
+  <span style="flex:1"></span>
+  <label class="chip"><input type="checkbox" id="colorize" checked> Tô màu âm – vần</label>
+  <button class="btn" id="fs">⛶ Toàn màn hình</button>
+ </div>
+ <div class="stage" id="stage"></div>
+ <p class="small muted">Mẹo: dùng phím ← → hoặc chạm vào màn hình để chuyển. Với câu, mỗi lần chạm hiện thêm một tiếng.</p>
+</section>
+<!-- TRÒ CHƠI -->
+<section class="pane" id="p-choi">
+ <div class="games">
+  <button class="gcard" style="background:linear-gradient(135deg,#16A34A,#4ADE80)" data-g="tranh"><div class="i">🖼️</div><h3>Chọn tranh đúng</h3><p>Đọc từ trên màn hình, chạm vào tranh đúng.</p></button>
+  <button class="gcard" style="background:linear-gradient(135deg,#1C64F2,#60A5FA)" data-g="ghep"><div class="i">🧩</div><h3>Ghép âm</h3><p>Âm đầu gặp vần, thêm dấu thanh, thành tiếng.</p></button>
+  <button class="gcard" style="background:linear-gradient(135deg,#9333EA,#C084FC)" data-g="nhanh"><div class="i">⏱️</div><h3>Đọc nhanh 60 giây</h3><p>Đọc đúng càng nhiều từ càng được nhiều sao.</p></button>
+ </div>
+ <div class="stage" id="gstage"><div class="muted fun" style="font-size:22px">Chọn một trò chơi ở trên 👆</div></div>
+</section>
+<!-- SỔ THEO DÕI -->
+<section class="pane" id="p-so">
+ <div class="card">
+  <div class="row"><h3 style="margin:0">Kết quả đọc – <span id="soLesson"></span></h3><span style="flex:1"></span>
+   <button class="btn" id="exportSo">📊 Xuất Excel</button></div>
+  <p class="small muted">Chạm vào tên con để đổi mức: lần 1 = Đọc tốt, lần 2 = Đọc chậm, lần 3 = Cần kèm, lần 4 = xóa.</p>
+  <div class="legend"><span><i class="dot" style="background:var(--ok)"></i>Đọc tốt</span><span><i class="dot" style="background:var(--mid)"></i>Đọc chậm</span><span><i class="dot" style="background:var(--low)"></i>Cần kèm</span></div>
+  <div class="sum" id="soSum" style="margin-top:12px"></div>
+  <div class="kids" id="kids"></div>
+ </div>
+ <div class="card">
+  <h3 style="margin-top:0">Hành trình đọc của lớp (các bài gần đây)</h3>
+  <div style="overflow-x:auto"><table class="hist" id="hist"></table></div>
+ </div>
+</section>
+<!-- AI -->
+<section class="pane" id="p-ai">
+ <div class="grid2">
+  <div class="card">
+   <h3 style="margin-top:0">✨ Nhờ AI viết bài đọc mới</h3>
+   <label class="small muted">Chủ đề</label>
+   <select id="aiTopic"><option>Gia đình</option><option>Trường lớp</option><option>Con vật</option><option>Cây cối, hoa quả</option><option>Đồ chơi</option><option>Thời tiết, mùa</option><option>Quê hương</option><option>Ngày lễ, Tết</option></select>
+   <label class="small muted" style="display:block;margin-top:10px">Loại bài</label>
+   <select id="aiKind"><option value="cau">6 câu ngắn</option><option value="doan">Một đoạn đọc 3–4 câu</option></select>
+   <div class="row" style="margin-top:14px"><button class="btn pri big" id="aiGo">✨ Viết bài đọc</button></div>
+   <div id="aiBox" hidden></div>
+   <p class="small muted">AI chỉ được dùng âm, vần đã học. Web vẫn kiểm tra lại từng tiếng: tiếng nào có âm, vần chưa học sẽ bị tô đỏ để cô sửa. Web không gửi tên học sinh lên AI.</p>
+  </div>
+  <div>
+   <div class="card"><h3 style="margin-top:0">Kết quả</h3><div id="aiRes" class="muted">Chưa có bài đọc nào.</div></div>
+   <div class="card">
+    <h3 style="margin-top:0">🔎 Kiểm tra câu cô tự viết</h3>
+    <textarea id="chkIn" rows="3" placeholder="Gõ câu cần kiểm tra, ví dụ: Bé Hà có cá cờ."></textarea>
+    <div id="chkOut" class="chk" style="margin-top:8px"></div>
+    <div class="row"><button class="btn" id="chkAdd">➕ Thêm vào ngân hàng câu</button></div>
+   </div>
+   <div class="card"><h3 style="margin-top:0">Câu cô đã thêm (<span id="myCount">0</span>)</h3><div id="myList" class="small"></div></div>
+  </div>
+ </div>
+</section>
+<!-- CÀI ĐẶT -->
+<section class="pane" id="p-cai">
+ <div class="grid2">
+  <div>
+   <div class="card">
+    <h3 style="margin-top:0">Lớp của cô</h3>
+    <label class="small muted">Tên giáo viên</label><input type="text" id="setTeacher">
+    <label class="small muted" style="display:block;margin-top:8px">Lớp</label><input type="text" id="setClass">
+    <label class="small muted" style="display:block;margin-top:8px">Trường</label><input type="text" id="setSchool">
+   </div>
+   <div class="card">
+    <h3 style="margin-top:0">Mã AI Gemini (không bắt buộc)</h3>
+    <ol class="small" style="padding-left:18px;margin:0 0 8px">
+     <li>Mở <a href="https://aistudio.google.com/apikey" target="_blank" rel="noopener">aistudio.google.com/apikey</a>, đăng nhập Gmail của cô.</li>
+     <li>Bấm <b>Create API key</b> (Tạo khóa API), sao chép mã.</li>
+     <li>Dán vào ô dưới, bấm Lưu. Mỗi cô dùng một mã riêng, miễn phí.</li></ol>
+    <input type="password" id="setKey" placeholder="Dán mã AI vào đây">
+    <div class="row" style="margin-top:8px"><button class="btn pri" id="saveSet">Lưu</button><button class="btn" id="testKey">Thử mã</button></div>
+   </div>
+   <div class="card">
+    <h3 style="margin-top:0">Sao lưu</h3>
+    <p class="small muted">Dữ liệu lưu ngay trên máy này. Muốn chuyển sang máy khác: Sao lưu ra file rồi Khôi phục ở máy kia.</p>
+    <div class="row"><button class="btn" id="bk">💾 Sao lưu</button><label class="btn">📂 Khôi phục<input type="file" id="rs" accept=".json" hidden></label></div>
+   </div>
+  </div>
+  <div>
+   <div class="card">
+    <h3 style="margin-top:0">Danh sách lớp (<span id="nKids">0</span> con)</h3>
+    <p class="small muted">Dán danh sách (mỗi dòng một con) hoặc chọn file Excel danh sách lớp.</p>
+    <textarea id="setKids" rows="8"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn pri" id="saveKids">Lưu danh sách</button><label class="btn">📄 Chọn file Excel<input type="file" id="xlsKids" accept=".xlsx,.xls,.csv" hidden></label></div>
+   </div>
+   <div class="card">
+    <h3 style="margin-top:0">Từ riêng của cô</h3>
+    <p class="small muted">Mỗi dòng một từ, có thể thêm hình: <code>bờ đê|🌾</code></p>
+    <textarea id="setWords" rows="4"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn pri" id="saveWords">Lưu từ</button></div>
+   </div>
+   <div class="card">
+    <h3 style="margin-top:0">Trình tự bài học</h3>
+    <p class="small muted">Theo sách Tiếng Việt 1 – Kết nối tri thức. Nếu trường dạy khác thứ tự, cô sửa ở đây. Mỗi dòng: <code>số bài | tên bài | âm, vần (cách nhau bằng dấu cách)</code>. Dấu thanh viết: <code>`</code> huyền, <code>'</code> sắc, <code>?</code> hỏi, <code>~</code> ngã, <code>.</code> nặng.</p>
+    <textarea id="setLessons" rows="8" style="font-family:monospace;font-size:13px"></textarea>
+    <div class="row" style="margin-top:8px"><button class="btn pri" id="saveLessons">Lưu trình tự</button><button class="btn ghost" id="resetLessons">Về mặc định</button></div>
+   </div>
+  </div>
+ </div>
+</section>
+</main>
+<script src="bank.js"></script>
+<script>
+/* ===== tiện ích chung ===== */
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const rnd=n=>Math.floor(Math.random()*n),pick=a=>a[rnd(a.length)];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=rnd(i+1);[a[i],a[j]]=[a[j],a[i]]}return a};
+const todayISO=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")};
+const fmtDate=iso=>{if(!iso)return"";const[y,m,d]=iso.split("-");return d+"/"+m+"/"+y};
+function toast(msg){let t=$("#toast");if(!t){t=document.createElement("div");t.id="toast";document.body.appendChild(t)}t.textContent=msg;t.className="show";clearTimeout(t._h);t._h=setTimeout(()=>t.className="",2400)}
+function copyText(text,msg){(navigator.clipboard?navigator.clipboard.writeText(text):Promise.reject()).catch(()=>{const ta=document.createElement("textarea");ta.value=text;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove()}).finally(()=>toast(msg||"Đã sao chép"))}
+function download(name,blob){const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
+function loadStore(key,def){try{const v=JSON.parse(localStorage.getItem(key));return v?Object.assign(structuredClone(def),v):structuredClone(def)}catch(e){return structuredClone(def)}}
+function saveStore(key,val){try{localStorage.setItem(key,JSON.stringify(val))}catch(e){toast("Không lưu được trên máy này")}}
+function backup(key,val,name){download(name+"-"+todayISO()+".json",new Blob([JSON.stringify(val)],{type:"application/json"}))}
+function restore(file,cb){const r=new FileReader();r.onload=()=>{try{cb(JSON.parse(r.result))}catch(e){toast("File không đúng")}};r.readAsText(file)}
+/* đọc danh sách tên từ Excel hoặc dán */
+function parseNames(text){return String(text).split(/\r?\n/).map(s=>s.replace(/^\s*\d+[\.\)\-\s]+/,"").split(/\t|,|;/).map(x=>x.trim()).filter(Boolean).sort((a,b)=>b.split(" ").length-a.split(" ").length)[0]||"").map(s=>s.trim()).filter(s=>s&&/[a-zà-ỹđ]/i.test(s)&&!/^(họ|stt|tên)/i.test(s))}
+function readExcelNames(file,cb){const r=new FileReader();r.onload=()=>{try{const wb=XLSX.read(r.result,{type:"array"});const rows=XLSX.utils.sheet_to_json(wb.Sheets[wb.SheetNames[0]],{header:1,defval:""});
+  const out=[];rows.forEach(row=>{const cells=row.map(c=>String(c).trim()).filter(c=>c&&/[a-zà-ỹđ]/i.test(c)&&c.split(" ").length>=2&&c.length<40&&!/^(họ|tên|stt|lớp|trường|danh)/i.test(c));if(cells[0])out.push(cells[0])});cb(out)}catch(e){toast("Không đọc được file")}};r.readAsArrayBuffer(file)}
+/* ===== AI Gemini ===== */
+async function gemini(key,prompt,json){
+  key=(key||"").trim();let last;
+  for(const m of["gemini-2.5-flash","gemini-flash-latest","gemini-2.0-flash"]){let res;
+    try{res=await fetch("https://generativelanguage.googleapis.com/v1beta/models/"+m+":generateContent",{method:"POST",headers:{"Content-Type":"application/json","x-goog-api-key":key},
+      body:JSON.stringify({contents:[{role:"user",parts:[{text:prompt}]}],generationConfig:Object.assign({temperature:.8},json?{responseMimeType:"application/json"}:{})})})}
+    catch(e){throw new Error("Không kết nối được tới AI. Kiểm tra mạng, hoặc dùng cách sao chép sang Gemini.")}
+    if(res.status===404){last=new Error("Không tìm thấy mô hình AI.");continue}
+    if(!res.ok){let msg="";try{msg=(await res.json()).error.message}catch(e){}
+      if(res.status===429)throw new Error("Hết lượt AI miễn phí trong lúc này. Chờ 1 phút rồi thử lại.");
+      if([400,401,403].includes(res.status))throw new Error("Mã AI chưa dùng được"+(msg?" (Google báo: "+msg+")":"")+". Kiểm tra lại mã trong Cài đặt, hoặc tạo mã mới ở aistudio.google.com.");
+      throw new Error("AI báo lỗi "+res.status+". "+msg)}
+    const d=await res.json();return((((d.candidates||[])[0]||{}).content||{}).parts||[]).map(p=>p.text||"").join("").trim()}
+  throw last||new Error("Không gọi được AI.")}
+function extractJSON(t){t=String(t||"").replace(/```json|```/gi,"").trim();const a=t.search(/[\[{]/);if(a<0)throw new Error("Câu trả lời không đúng dạng.");const close=t[a]==="{"?"}":"]";return JSON.parse(t.slice(a,t.lastIndexOf(close)+1))}
+/* có mã: gọi thẳng; không có mã: khung sao chép – dán */
+async function runAI({key,prompt,json,box,onResult}){
+  box.hidden=false;
+  if(!(key||"").trim())return manualAI(box,prompt,json,onResult,"Chưa có mã AI.");
+  box.innerHTML='<div class="ai-wait"><span class="spin"></span> AI đang viết…</div>';
+  try{const t=await gemini(key,prompt,json);box.hidden=true;box.innerHTML="";onResult(json?extractJSON(t):t)}
+  catch(e){manualAI(box,prompt,json,onResult,e.message)}}
+function manualAI(box,prompt,json,onResult,reason){
+  box.innerHTML=`<div class="ai-manual"><b>Dùng AI qua ứng dụng Gemini (miễn phí)</b>
+  <p class="muted small">${esc(reason)} Làm 3 bước: <b>1.</b> Bấm “Sao chép yêu cầu”. <b>2.</b> Mở Gemini, dán vào rồi gửi. <b>3.</b> Sao chép câu trả lời, dán vào ô dưới.</p>
+  <div class="row"><button class="btn pri" data-a="cp">Sao chép yêu cầu</button><a class="btn" href="https://gemini.google.com/app" target="_blank" rel="noopener">Mở Gemini</a></div>
+  <textarea rows="4" data-ans placeholder="Dán câu trả lời của Gemini vào đây"></textarea>
+  <div class="row"><button class="btn pri" data-a="use">Dùng câu trả lời này</button><button class="btn ghost" data-a="x">Đóng</button></div></div>`;
+  $("[data-a=cp]",box).onclick=()=>copyText(prompt,"Đã sao chép. Mở Gemini và dán vào.");
+  $("[data-a=x]",box).onclick=()=>{box.hidden=true};
+  $("[data-a=use]",box).onclick=()=>{const v=$("[data-ans]",box).value;try{onResult(json?extractJSON(v):v.trim());box.hidden=true}catch(e){toast("Chưa đọc được: hãy sao chép toàn bộ câu trả lời")}}}
+/* ảnh từ một khối HTML */
+async function saveImage(el,name){if(!window.html2canvas){toast("Đang tải công cụ, thử lại sau giây lát");return}
+  const c=await html2canvas(el,{scale:2,backgroundColor:"#ffffff",useCORS:true});c.toBlob(b=>download(name+".png",b))}
+if("serviceWorker" in navigator&&location.protocol==="https:"&&/github\.io$/.test(location.host)){navigator.serviceWorker.register("sw.js").catch(()=>{})}
+
+const KEY="be-vui-luyen-doc-v1";
+const DEF={teacher:"",cls:"",school:"",key:"",lesson:11,levels:[1,2,3],kids:[],marks:{},myWords:"",mySents:[],lessons:null};
+let S=loadStore(KEY,DEF);
+const save=()=>saveStore(KEY,S);
+if(location.hash.startsWith("#ai=")){S.key=decodeURIComponent(location.hash.slice(4));save();history.replaceState(null,"",location.pathname)}
+
+/* ===== tách tiếng: âm đầu + vần + thanh ===== */
+const TONEMARK={"̀":"`","́":"'","̉":"?","̃":"~","̣":"."};
+const TONENAME={"`":"huyền","'":"sắc","?":"hỏi","~":"ngã",".":"nặng"};
+const ONSETS=["ngh","ng","gh","gi","kh","nh","ph","th","tr","ch","qu","b","c","d","đ","g","h","k","l","m","n","p","r","s","t","v","x"];
+const VOW="aăâeêioôơuưy";
+function parseSyl(syl){
+  let tone="",base="";
+  for(const ch of syl.toLowerCase().normalize("NFD")){if(TONEMARK[ch])tone=TONEMARK[ch];else base+=ch}
+  base=base.normalize("NFC");
+  let on="";for(const o of ONSETS){if(base.startsWith(o)){on=o;break}}
+  let rime=base.slice(on.length);
+  if(on==="gi"&&(!rime||!VOW.includes(rime[0])))rime="i"+rime;
+  return{on,rime,tone,base};
+}
+function lessons(){
+  if(S.lessons&&S.lessons.length)return S.lessons;
+  return LESSONS_DEFAULT.map(([n,t,u])=>({n,t,u:u.split(/\s+/).filter(Boolean)}));
+}
+function known(upto){
+  const K={on:new Set(),rime:new Set(),tone:new Set(),cur:new Set()};
+  lessons().slice(0,upto+1).forEach((L,i)=>L.u.forEach(x=>{
+    x=x.toLowerCase();
+    if(i===upto)K.cur.add(x);
+    if(TONENAME[x])K.tone.add(x);
+    else if(ONSETS.includes(x))K.on.add(x);
+    else K.rime.add(x);
+  }));
+  return K;
+}
+function sylOK(syl,K){const p=parseSyl(syl);if(!p.rime)return false;
+  return(!p.on||K.on.has(p.on))&&K.rime.has(p.rime)&&(!p.tone||K.tone.has(p.tone))}
+function sylNew(syl,K){const p=parseSyl(syl);return K.cur.has(p.on)||K.cur.has(p.rime)||K.cur.has(p.tone)}
+const tokens=t=>String(t).match(/[A-Za-zÀ-ỹĐđ]+/g)||[];
+function textOK(t,K){const tk=tokens(t);return tk.length>0&&tk.every(s=>sylOK(s,K))}
+function textNew(t,K){return tokens(t).some(s=>sylNew(s,K))}
+function allWords(){
+  const parse=str=>[...String(str).matchAll(/\s*([^|\n]+?)\|(\S*)/g)].map(m=>({t:m[1].trim(),e:m[2]}));
+  const mine=String(S.myWords||"").split(/\n/).map(l=>l.trim()).filter(Boolean).map(l=>{const[a,b]=l.split("|");return{t:a.trim(),e:(b||"").trim()}});
+  const seen=new Set();return[...mine,...parse(WORDS)].filter(w=>{const k=w.t.toLowerCase();if(seen.has(k))return false;seen.add(k);return true});
+}
+function allSents(){return[...S.mySents,...SENTENCES.split("|").map(s=>s.trim()).filter(Boolean)]}
+/* ưu tiên chứa âm, vần mới */
+function pickFocus(list,K,n,get=x=>x){
+  const a=shuffle(list.filter(x=>textNew(get(x),K))),b=shuffle(list.filter(x=>!textNew(get(x),K)));
+  return[...a.slice(0,Math.ceil(n*.7)),...b,...a.slice(Math.ceil(n*.7))].slice(0,n);
+}
+function pool(){
+  const K=known(S.lesson);
+  const words=allWords().filter(w=>textOK(w.t,K));
+  const syls=[];const seen=new Set();
+  words.forEach(w=>tokens(w.t).forEach(s=>{s=s.toLowerCase();if(!seen.has(s)){seen.add(s);syls.push(s)}}));
+  let sents=allSents().filter(s=>textOK(s,K));
+  if(sents.length<3){ /* bài đầu: ghép cụm từ đã học */
+    const ws=words.map(w=>w.t);const extra=[];
+    for(let i=0;i<8&&ws.length>1;i++){const a=pick(ws),b=pick(ws);if(a!==b)extra.push(a[0].toUpperCase()+a.slice(1)+", "+b+".")}
+    sents=[...sents,...new Set(extra)];
+  }
+  return{K,words,syls,sents};
+}
+const capFirst=s=>s?s[0].toUpperCase()+s.slice(1):s;
+function spellHTML(s){const p=parseSyl(s);
+  return`<div class="sp">${p.on?`<span class="o">${esc(p.on)}</span><span class="eq">+</span>`:""}<span class="r">${esc(p.rime)}</span>${p.tone?`<span class="eq">+</span><span class="t">${TONENAME[p.tone]}</span>`:""}<span class="eq">→</span><b>${esc(s)}</b></div>`}
+function coloredSyl(s){const p=parseSyl(s);if(!p.on)return`<span class="r">${esc(s)}</span>`;
+  const n=[...p.on].length;const ch=[...s.normalize("NFC")];
+  return`<span class="o">${esc(ch.slice(0,n).join(""))}</span><span class="r">${esc(ch.slice(n).join(""))}</span>`}
+
+/* ===== giao diện chung ===== */
+function fillLessonSel(){
+  const sel=$("#lessonSel");S.lesson=Math.min(S.lesson,lessons().length-1);
+  sel.innerHTML=lessons().map((L,i)=>`<option value="${i}" ${i===S.lesson?"selected":""}>Bài ${esc(L.n)}: ${esc(L.t)}</option>`).join("");
+  $("#subline").textContent=[S.teacher&&("Cô "+S.teacher),S.cls&&("Lớp "+S.cls),"Tiếng Việt 1 · Kết nối tri thức"].filter(Boolean).join(" · ");
+}
+$("#lessonSel").onchange=e=>{S.lesson=+e.target.value;save();refresh()};
+$$("#tabs .tab").forEach(b=>b.onclick=()=>show(b.dataset.t));
+function show(t){$$("#tabs .tab").forEach(b=>b.classList.toggle("on",b.dataset.t===t));$$(".pane").forEach(p=>p.classList.toggle("on",p.id==="p-"+t));
+  if(t==="chieu")renderStage();if(t==="so")renderSo();if(t==="cai")renderSet();if(t==="ai")renderMine();window.scrollTo(0,0)}
+function refresh(){fillLessonSel();renderUnits();makeSheet();if($("#p-chieu").classList.contains("on")){slideI=0;renderStage()}if($("#p-so").classList.contains("on"))renderSo()}
+function renderUnits(){
+  const K=known(S.lesson),L=lessons();const out=[];const seen=new Set();
+  L.slice(0,S.lesson+1).forEach((l,i)=>l.u.forEach(u=>{if(seen.has(u))return;seen.add(u);out.push(`<span class="unit ${i===S.lesson?"new":""}">${TONENAME[u]?"dấu "+TONENAME[u]:esc(u)}</span>`)}));
+  $("#units").innerHTML=out.join("")||'<span class="muted small">Chưa có</span>';
+}
+
+/* ===== PHIẾU ===== */
+let SHEET=null;
+$$("#lvlChips .chip").forEach(c=>{c.classList.toggle("on",S.levels.includes(+c.dataset.l));c.onclick=()=>{const l=+c.dataset.l;
+  S.levels=S.levels.includes(l)?S.levels.filter(x=>x!==l):[...S.levels,l].sort();if(!S.levels.length)S.levels=[l];save();
+  $$("#lvlChips .chip").forEach(x=>x.classList.toggle("on",S.levels.includes(+x.dataset.l)));renderSheets()}});
+function makeSheet(){
+  const P=pool();
+  SHEET={P,syls:pickFocus(P.syls,P.K,12),words:pickFocus(P.words,P.K,12,w=>w.t),sents:pickFocus(P.sents,P.K,5)};
+  renderSheets();
+}
+function sheetHTML(levels,groupName,names){
+  const L=lessons()[S.lesson];const x=SHEET;
+  let h=`<div class="sheet"><h2 class="fun">PHIẾU LUYỆN ĐỌC</h2><div class="meta">Bài ${esc(L.n)}: ${esc(L.t)}${groupName?" · "+esc(groupName):""}</div>
+  <div class="name"><span>Họ và tên: ……………………………</span><span>Lớp: ${esc(S.cls||"……")}</span><span>Ngày: ……/……</span></div>`;
+  if(names&&names.length)h+=`<div class="grp">Dành cho: ${names.map(esc).join(", ")}</div>`;
+  if(levels.includes(1)&&x.syls.length)h+=`<div class="lvl lv1"><h3><span class="badge">Mức 1</span> Ghép âm thành tiếng rồi đọc</h3><div class="spell">${x.syls.slice(0,8).map(spellHTML).join("")}</div></div>`;
+  if(levels.includes(2)&&x.words.length)h+=`<div class="lvl lv2"><h3><span class="badge">Mức 2</span> Đọc từ</h3><div class="words">${x.words.slice(0,levels.length===1?12:8).map(w=>`<div class="w"><div class="e">${w.e||"⭐"}</div><div class="t">${esc(w.t)}</div></div>`).join("")}</div></div>`;
+  if(levels.includes(3)&&x.sents.length)h+=`<div class="lvl lv3"><h3><span class="badge">Mức 3</span> Đọc câu</h3><ol class="sents">${x.sents.slice(0,levels.length===1?5:4).map(s=>`<li>${esc(s)}</li>`).join("")}</ol></div>`;
+  h+=`<div class="tip"><b>Gợi ý cho bố mẹ:</b> Mỗi ngày cho con đọc phiếu 10–15 phút. Con đánh vần trước rồi đọc trơn; con đọc sai thì bố mẹ đọc mẫu chậm để con đọc lại. Khen con khi con đọc đúng, không so sánh con với bạn.</div></div>`;
+  return h;
+}
+function renderSheets(){$("#sheetWrap").innerHTML=sheetHTML(S.levels)}
+$("#newSheet").onclick=()=>{makeSheet();toast("Đã tạo phiếu mới")};
+$("#printSheet").onclick=()=>{renderSheets();printPane("phieu")};
+$("#imgSheet").onclick=()=>saveImage($("#sheetWrap .sheet"),"Phieu-luyen-doc-bai-"+lessons()[S.lesson].n);
+$("#groupSheet").onclick=()=>{
+  const m=S.marks[lessonKey()]||{};const G={A:[],B:[],C:[]};S.kids.forEach((k,i)=>{if(m[i])G[m[i]].push(k)});
+  $("#sheetWrap").innerHTML=sheetHTML([3],"Nhóm đọc tốt",G.A)+sheetHTML([2,3],"Nhóm đọc chậm",G.B)+sheetHTML([1,2],"Nhóm cần kèm",G.C);
+  toast("Đã tạo 3 phiếu theo nhóm");setTimeout(()=>printPane("phieu"),300)};
+function printPane(id){$$(".pane").forEach(p=>p.classList.toggle("print",p.id==="p-"+id));window.print()}
+
+/* ===== TRÌNH CHIẾU ===== */
+let slideMode="tieng",slideI=0,reveal=0;
+$$(".modes .chip[data-m]").forEach(c=>c.onclick=()=>{slideMode=c.dataset.m;slideI=0;reveal=0;$$(".modes .chip[data-m]").forEach(x=>x.classList.toggle("on",x===c));renderStage()});
+$("#colorize").onchange=renderStage;
+function slideItems(){if(!SHEET)makeSheet();return slideMode==="tieng"?SHEET.syls:slideMode==="tu"?SHEET.words:SHEET.sents}
+function renderStage(){
+  const it=slideItems();const st=$("#stage");if(!it.length){st.innerHTML='<div class="muted">Chưa có nội dung cho bài này.</div>';return}
+  slideI=(slideI+it.length)%it.length;const x=it[slideI];const col=$("#colorize").checked;
+  const txt=s=>tokens(s).length?String(s).replace(/[A-Za-zÀ-ỹĐđ]+/g,w=>col?coloredSyl(w):esc(w)):esc(s);
+  let body="";
+  if(slideMode==="tieng")body=`<div class="big">${txt(x)}</div><div class="muted" style="margin-top:12px;font-size:22px">${(()=>{const p=parseSyl(x);return[p.on,p.rime,p.tone&&("dấu "+TONENAME[p.tone])].filter(Boolean).map(esc).join(" · ")})()}</div>`;
+  else if(slideMode==="tu")body=`<div class="emo">${x.e||"⭐"}</div><div class="big">${txt(x.t)}</div>`;
+  else{const ws=String(x).split(/\s+/);body=`<div class="big sent">${ws.map((w,i)=>`<span class="${i<reveal?"":"hidew"}">${txt(w)}</span>`).join(" ")}</div>`}
+  st.innerHTML=`<div class="cnt">${slideI+1} / ${it.length}</div>${body}<div class="ctl no-print"><button class="btn" data-a="prev">◀</button>${hasVoice()?'<button class="btn" data-a="say">🔊 Nghe mẫu</button>':""}<button class="btn pri" data-a="next">▶</button></div>`;
+}
+function stageNext(d){const it=slideItems();if(slideMode==="cau"&&d>0){const n=String(it[slideI]).split(/\s+/).length;if(reveal<n){reveal++;renderStage();return}}
+  slideI+=d;reveal=0;renderStage()}
+$("#stage").onclick=e=>{const a=e.target.closest("[data-a]");if(a){e.stopPropagation();if(a.dataset.a==="say"){const it=slideItems()[slideI];speak(typeof it==="string"?it:it.t)}else stageNext(a.dataset.a==="next"?1:-1);return}stageNext(1)};
+document.addEventListener("keydown",e=>{if(!$("#p-chieu").classList.contains("on"))return;if(e.key==="ArrowRight"||e.key===" "){e.preventDefault();stageNext(1)}if(e.key==="ArrowLeft")stageNext(-1)});
+$("#fs").onclick=()=>{const st=$("#stage");document.fullscreenElement?document.exitFullscreen():st.requestFullscreen&&st.requestFullscreen()};
+function viVoice(){return(window.speechSynthesis&&speechSynthesis.getVoices()||[]).find(v=>/^vi/i.test(v.lang))}
+function hasVoice(){return!!viVoice()}
+function speak(t){const v=viVoice();if(!v)return;const u=new SpeechSynthesisUtterance(t);u.voice=v;u.lang=v.lang;u.rate=.75;speechSynthesis.cancel();speechSynthesis.speak(u)}
+if(window.speechSynthesis)speechSynthesis.onvoiceschanged=()=>{if($("#p-chieu").classList.contains("on"))renderStage()};
+
+/* ===== TRÒ CHƠI ===== */
+let G={};
+$$(".gcard").forEach(b=>b.onclick=()=>startGame(b.dataset.g));
+function confetti(){const c=document.createElement("div");c.className="confetti";c.innerHTML=Array.from({length:18},()=>`<span style="left:${rnd(100)}vw;animation-delay:${Math.random()*.4}s">${pick(["⭐","🌟","🎉","💛","🧡"])}</span>`).join("");document.body.appendChild(c);setTimeout(()=>c.remove(),2200)}
+function startGame(g){clearInterval(G.timer);G={g,score:0,n:0};nextRound()}
+function nextRound(){
+  const P=pool();const st=$("#gstage");G.n++;
+  if(G.g==="tranh"){
+    const ws=P.words.filter(w=>w.e);if(ws.length<3){st.innerHTML='<div class="muted">Bài này chưa đủ từ có tranh. Cô chọn bài sau hoặc thêm từ ở Cài đặt.</div>';return}
+    const right=pick(ws);const others=shuffle(ws.filter(w=>w.e!==right.e)).slice(0,2);const opts=shuffle([right,...others]);
+    st.innerHTML=`<div class="cnt">⭐ ${G.score}</div><div class="big">${esc(right.t)}</div><div class="opts">${opts.map(o=>`<button class="opt" data-ok="${o===right?1:0}">${o.e}</button>`).join("")}</div>`;
+    $$(".opt",st).forEach(b=>b.onclick=()=>{if(b.dataset.ok==="1"){b.classList.add("good");G.score++;confetti();setTimeout(nextRound,1100)}else b.classList.add("bad")});
+  }else if(G.g==="ghep"){
+    const s=pick(P.syls);const p=parseSyl(s);if(!s){st.innerHTML='<div class="muted">Chưa có tiếng.</div>';return}
+    st.innerHTML=`<div class="cnt">Lượt ${G.n}</div><div class="tiles" id="tl">${p.on?`<span class="tile" style="color:var(--on)">${esc(p.on)}</span>`:""}<span class="tile" style="color:var(--rim)">${esc(p.rime)}</span>${p.tone?`<span class="tile" style="color:#9333EA;font-size:.45em">dấu ${TONENAME[p.tone]}</span>`:""}</div>
+    <div class="row" style="justify-content:center;margin-top:26px"><button class="btn pri big" id="join">✨ Ghép lại</button><button class="btn big" id="nx">Tiếng khác ▶</button></div>`;
+    $("#join").onclick=()=>{$("#tl").innerHTML=`<span class="tile" style="color:var(--ink);border-color:var(--pri2)">${esc(s)}</span>`;confetti()};
+    $("#nx").onclick=nextRound;
+  }else if(G.g==="nhanh"){
+    if(G.n===1){G.left=60;G.timer=setInterval(()=>{G.left--;const t=$("#gt");if(t)t.textContent=G.left+"s";if(G.left<=0){clearInterval(G.timer);
+      st.innerHTML=`<div class="fun" style="font-size:34px">Hết giờ! 🎉</div><div class="big">${G.score} từ</div><div class="stars">${"⭐".repeat(Math.min(10,Math.ceil(G.score/2)))}</div><div class="row" style="justify-content:center;margin-top:16px"><button class="btn pri big" onclick="startGame('nhanh')">Chơi lại</button></div>`;confetti()}},1000)}
+    const w=pick(P.words.length?P.words:[{t:"a"}]);
+    st.innerHTML=`<div class="cnt"><span class="timer" id="gt">${G.left}s</span></div><div class="emo" style="opacity:.25">${w.e||""}</div><div class="big">${esc(w.t)}</div>
+    <div class="row" style="justify-content:center;margin-top:20px"><button class="btn pri big" id="ok">✅ Đọc đúng (${G.score})</button><button class="btn big" id="sk">Bỏ qua ▶</button></div>`;
+    $("#ok").onclick=()=>{G.score++;nextRound()};$("#sk").onclick=nextRound;
+  }
+}
+
+/* ===== SỔ THEO DÕI ===== */
+const lessonKey=()=>lessons()[S.lesson].n;
+function renderSo(){
+  const k=lessonKey();const m=S.marks[k]||{};$("#soLesson").textContent="Bài "+k+": "+lessons()[S.lesson].t;
+  if(!S.kids.length){$("#kids").innerHTML='<div class="help">Chưa có danh sách lớp. Vào <b>Cài đặt</b> để dán danh sách hoặc chọn file Excel.</div>';$("#soSum").innerHTML="";$("#hist").innerHTML="";return}
+  const c={A:0,B:0,C:0};Object.values(m).forEach(v=>c[v]++);
+  $("#soSum").innerHTML=`<div><b style="color:var(--ok)">${c.A}</b>Đọc tốt</div><div><b style="color:var(--mid)">${c.B}</b>Đọc chậm</div><div><b style="color:var(--low)">${c.C}</b>Cần kèm</div><div><b>${S.kids.length-c.A-c.B-c.C}</b>Chưa đánh giá</div>`;
+  const lab={A:"Đọc tốt",B:"Đọc chậm",C:"Cần kèm"};
+  $("#kids").innerHTML=S.kids.map((n,i)=>{const parts=n.trim().split(/\s+/);return`<button class="kid ${m[i]||""}" data-i="${i}"><span class="n">${i+1}</span><span class="nm">${esc(parts.slice(-1)[0])}<small>${esc(parts.slice(0,-1).join(" "))}${m[i]?" · "+lab[m[i]]:""}</small></span></button>`}).join("");
+  $$("#kids .kid").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;const cur=(S.marks[k]||{})[i];const nx={undefined:"A",A:"B",B:"C",C:undefined}[cur];
+    S.marks[k]=S.marks[k]||{};if(nx)S.marks[k][i]=nx;else delete S.marks[k][i];save();renderSo()});
+  const ks=lessons().map(l=>l.n).filter(n=>S.marks[n]&&Object.keys(S.marks[n]).length).slice(-8);
+  const col={A:"var(--ok)",B:"var(--mid)",C:"var(--low)"};
+  $("#hist").innerHTML=ks.length?`<tr><th>Học sinh</th>${ks.map(n=>`<th>Bài ${esc(n)}</th>`).join("")}</tr>`+S.kids.map((n,i)=>`<tr><td>${esc(n)}</td>${ks.map(l=>{const v=(S.marks[l]||{})[i];return`<td>${v?`<i class="dot" style="background:${col[v]}"></i>`:"·"}</td>`}).join("")}</tr>`).join(""):'<tr><td class="muted">Chưa có bài nào được đánh giá.</td></tr>';
+}
+$("#exportSo").onclick=()=>{if(!window.XLSX)return toast("Đang tải công cụ Excel, thử lại sau");
+  const lab={A:"Đọc tốt",B:"Đọc chậm",C:"Cần kèm"};const ks=lessons().map(l=>l.n).filter(n=>S.marks[n]);
+  const rows=[["STT","Họ và tên",...ks.map(n=>"Bài "+n)],...S.kids.map((n,i)=>[i+1,n,...ks.map(l=>lab[(S.marks[l]||{})[i]]||"")])];
+  const wb=XLSX.utils.book_new();XLSX.utils.book_append_sheet(wb,XLSX.utils.aoa_to_sheet(rows),"Theo doi doc");XLSX.writeFile(wb,"Theo-doi-doc-lop-"+(S.cls||"1")+".xlsx")};
+
+/* ===== AI ===== */
+function allowedDesc(){const K=known(S.lesson);
+  return`Âm đầu được dùng: ${[...K.on].join(", ")||"(chưa có)"}. Vần/nguyên âm được dùng: ${[...K.rime].join(", ")}. Dấu thanh được dùng: ${[...K.tone].map(t=>TONENAME[t]).join(", ")||"chỉ thanh ngang"}.`}
+$("#aiGo").onclick=()=>{
+  const L=lessons()[S.lesson];const topic=$("#aiTopic").value,kind=$("#aiKind").value;
+  const prompt=`Bạn là giáo viên lớp 1 ở Việt Nam, dạy sách Tiếng Việt 1 bộ Kết nối tri thức với cuộc sống. Học sinh vừa học xong Bài ${L.n} (${L.t}).
+Hãy viết ${kind==="cau"?"6 câu ngắn, mỗi câu 3–7 tiếng":"một đoạn đọc 3–4 câu ngắn"} về chủ đề "${topic}", trong sáng, gần gũi với trẻ 6 tuổi, đúng chính tả.
+RÀNG BUỘC BẮT BUỘC: mỗi tiếng chỉ được ghép từ các âm, vần, dấu thanh dưới đây (học sinh chưa học những âm, vần khác):
+${allowedDesc()}
+Ưu tiên dùng nhiều tiếng có âm/vần của bài mới: ${L.u.map(u=>TONENAME[u]?"dấu "+TONENAME[u]:u).join(", ")||"ôn tập"}. Tên riêng chỉ dùng tên ngắn như Hà, Na, Lê.
+Chỉ trả về JSON dạng {"cau":["...","..."]}${kind==="doan"?" (mỗi phần tử là một câu của đoạn)":""}.`;
+  runAI({key:S.key,prompt,json:true,box:$("#aiBox"),onResult:r=>showAI((r.cau||r.sentences||[]).map(String),kind)});
+};
+function checkHTML(t,K){return esc(t).replace(/[A-Za-zÀ-ỹĐđ]+/g,w=>sylOK(w,K)?w:`<span class="bad" title="Có âm, vần hoặc dấu chưa học">${w}</span>`)}
+function showAI(list,kind){const K=known(S.lesson);if(!list.length){$("#aiRes").innerHTML="AI chưa trả về câu nào.";return}
+  if(kind==="doan")list=[list.join(" ")];
+  $("#aiRes").innerHTML=list.map((s,i)=>{const ok=textOK(s,K);return`<div class="res"><div class="chk">${checkHTML(s,K)}</div><div class="row" style="flex:none">${ok?'<span class="small" style="color:var(--ok);font-weight:700">✔ Đúng âm vần đã học</span>':'<span class="small" style="color:var(--low);font-weight:700">Có chữ chưa học</span>'}<button class="btn" data-add="${i}">➕ Thêm</button></div></div>`}).join("");
+  $$("#aiRes [data-add]").forEach(b=>b.onclick=()=>{addMine(list[+b.dataset.add]);b.disabled=true;b.textContent="Đã thêm"});
+}
+function addMine(s){s=String(s).trim();if(!s)return;if(!S.mySents.includes(s))S.mySents.unshift(s);save();renderMine();toast("Đã thêm vào ngân hàng câu")}
+function renderMine(){$("#myCount").textContent=S.mySents.length;$("#myList").innerHTML=S.mySents.length?S.mySents.map((s,i)=>`<div class="res"><span>${esc(s)}</span><button class="btn ghost" data-del="${i}">✕</button></div>`).join(""):'<span class="muted">Chưa có câu nào.</span>';
+  $$("#myList [data-del]").forEach(b=>b.onclick=()=>{S.mySents.splice(+b.dataset.del,1);save();renderMine()})}
+$("#chkIn").oninput=()=>{const K=known(S.lesson);const t=$("#chkIn").value;$("#chkOut").innerHTML=t.trim()?checkHTML(t,K)+(textOK(t,K)?' <span class="small" style="color:var(--ok)">✔ Các con đọc được</span>':""):""};
+$("#chkAdd").onclick=()=>{addMine($("#chkIn").value);$("#chkIn").value="";$("#chkOut").innerHTML=""};
+
+/* ===== CÀI ĐẶT ===== */
+function renderSet(){$("#setTeacher").value=S.teacher;$("#setClass").value=S.cls;$("#setSchool").value=S.school;$("#setKey").value=S.key;$("#setKids").value=S.kids.join("\n");$("#nKids").textContent=S.kids.length;
+  $("#setWords").value=S.myWords||"";$("#setLessons").value=lessons().map(l=>`${l.n} | ${l.t} | ${l.u.join(" ")}`).join("\n")}
+$("#saveSet").onclick=()=>{S.teacher=$("#setTeacher").value.trim();S.cls=$("#setClass").value.trim();S.school=$("#setSchool").value.trim();S.key=$("#setKey").value.trim();save();fillLessonSel();toast("Đã lưu")};
+$("#testKey").onclick=async()=>{S.key=$("#setKey").value.trim();save();try{await gemini(S.key,"Trả lời đúng một từ: OK");toast("Mã AI dùng được ✔")}catch(e){alert(e.message)}};
+$("#saveKids").onclick=()=>{S.kids=parseNames($("#setKids").value);save();renderSet();toast("Đã lưu "+S.kids.length+" học sinh")};
+$("#xlsKids").onchange=e=>{const f=e.target.files[0];if(f)readExcelNames(f,ns=>{$("#setKids").value=ns.join("\n");toast("Đọc được "+ns.length+" tên. Bấm Lưu danh sách.")});e.target.value=""};
+$("#saveWords").onclick=()=>{S.myWords=$("#setWords").value;save();makeSheet();toast("Đã lưu từ riêng")};
+$("#saveLessons").onclick=()=>{const ls=$("#setLessons").value.split(/\n/).map(l=>l.split("|").map(x=>x.trim())).filter(a=>a[0]).map(([n,t,u])=>({n,t:t||"",u:(u||"").split(/\s+/).filter(Boolean)}));
+  if(ls.length<3)return toast("Trình tự chưa đúng");S.lessons=ls;save();refresh();toast("Đã lưu trình tự")};
+$("#resetLessons").onclick=()=>{S.lessons=null;save();refresh();renderSet();toast("Đã về trình tự mặc định")};
+$("#bk").onclick=()=>backup(KEY,S,"Be-vui-luyen-doc");
+$("#rs").onchange=e=>{const f=e.target.files[0];if(f)restore(f,v=>{S=Object.assign(structuredClone(DEF),v);save();refresh();renderSet();toast("Đã khôi phục")});e.target.value=""};
+
+refresh();
+</script>
+</body>
+</html>
